@@ -22,6 +22,15 @@ class MyComponent extends React.Component{
     handOnMouseOver(event){
         console.log(event);
     }
+    handleOnChangeInput(event){
+        this.setState({
+            name : event.target.value
+        })
+    }
+    handleOnChangeSubmit = (event) =>{
+        event.preventDefault();
+        console.log(this.state);
+    }
     //JSX 
     render(){
         return(
@@ -29,7 +38,14 @@ class MyComponent extends React.Component{
                 My name is {this.state.name} and I {this.state.age} old
                 <button onClick={this.handleClick}>click me</button>
                 <button onMouseOver={this.handOnMouseOver}>Hover me</button>
-            </div>
+                
+                <form action="" onSubmit={(event) => {this.handleOnChangeSubmit(event)}}>
+                    <input type="text" placeholder='what your name ?'
+                    onChange={(event) =>this.handleOnChangeInput(event)}
+                     />
+                    <button type='submit'>submit</button>
+                </form>
+                </div>
         );
     }
 }

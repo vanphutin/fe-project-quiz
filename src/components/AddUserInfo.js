@@ -1,10 +1,10 @@
 import React from "react";
 
-class UserInfo extends React.Component {
+class AddUserInfo extends React.Component {
   state = {
-    name: "Van Phu Tin",
+    name: "",
     address: "Tin FullStack",
-    age: 21,
+    age: "",
   };
   handleClick = (event) => {
     //dùng arowFunction để fix lỗi
@@ -28,7 +28,12 @@ class UserInfo extends React.Component {
   }
   handleOnChangeSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
+
+    this.props.handleAddNewUser({
+      ID: Math.floor(Math.random() * 100 + 1) + " - random",
+      name: this.state.name,
+      age: this.state.age,
+    });
   };
 
   render() {
@@ -63,4 +68,4 @@ class UserInfo extends React.Component {
   }
 }
 
-export default UserInfo;
+export default AddUserInfo;

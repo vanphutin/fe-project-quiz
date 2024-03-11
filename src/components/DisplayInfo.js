@@ -1,5 +1,5 @@
 import React from "react";
-import UserInfo from "./userInfo";
+
 class DisplayInfo extends React.Component {
   state = {
     isShowListUser: true,

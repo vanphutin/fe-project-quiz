@@ -1,5 +1,5 @@
 // can use : class component or function component
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DisplayInfo from "./DisplayInfo";
 import AddUserInfo from "./AddUserInfo";
 
@@ -62,6 +62,11 @@ const MyComponent = (props) => {
     //   listUser: updatedList,
     // });
   };
+  useEffect(() => {
+    if (listUser.length === 0) {
+      alert("clear success !");
+    }
+  }, [listUser]);
   return (
     <>
       <div className="a">

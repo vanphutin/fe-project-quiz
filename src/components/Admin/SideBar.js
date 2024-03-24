@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import {
   ProSidebar,
@@ -17,6 +18,7 @@ import {
   FaRegLaughWink,
   FaHeart,
 } from "react-icons/fa";
+import { FaReact } from "react-icons/fa";
 import sidebarBg from "../../assets/bg2.jpg";
 
 const SideBar = (props) => {
@@ -43,7 +45,8 @@ const SideBar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            Hoi Dan IT
+            <FaReact size={"3em"} color="green" />
+            <span>Van Phu Tin</span>
           </div>
         </SidebarHeader>
 
@@ -54,6 +57,7 @@ const SideBar = (props) => {
               suffix={<span className="badge red">New</span>}
             >
               dashboard
+              <Link to="/admins"></Link>
             </MenuItem>
             <MenuItem icon={<FaGem />}> components </MenuItem>
           </Menu>
@@ -61,10 +65,14 @@ const SideBar = (props) => {
             <SubMenu
               suffix={<span className="badge yellow">3</span>}
               icon={<FaRegLaughWink />}
+              title="Features"
             >
-              <MenuItem> 1</MenuItem>
-              <MenuItem> 2</MenuItem>
-              <MenuItem> 3</MenuItem>
+              <MenuItem>
+                Quản lí User
+                <Link to="/admins/manage-users"></Link>
+              </MenuItem>
+              <MenuItem> Quản lí Bài Quiz</MenuItem>
+              <MenuItem> Quản lí Câu Hỏi </MenuItem>
             </SubMenu>
           </Menu>
         </SidebarContent>

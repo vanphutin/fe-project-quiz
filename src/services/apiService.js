@@ -34,9 +34,14 @@ const postLogin = (userEmail, userPassword) => {
     password: userPassword,
   });
 };
+
+const postRegister = (email, username, password) => {
+  return axios.post("api/v1/register", { email, username, password });
+};
 export { postCreateUser };
 export { getAllUsers };
 export { putUpdateUser };
 export { deleteUser };
 export { getUserWithPaginate };
 export { postLogin };
+export { postRegister };

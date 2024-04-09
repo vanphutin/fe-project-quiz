@@ -1,34 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import User from "./components/User/User";
-import Admin from "./components/Admin/Admin";
-import HomePage from "./components/Home/HomePage";
-import ManageUsers from "./components/Admin/Content/ManageUsers";
-import DashBoar from "./components/Admin/Content/DashBoar";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Layout from "./Layout";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     {/* <React.StrictMode> */}
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<HomePage />} />
-          <Route path="users" element={<User />} />
-        </Route>
-        <Route path="admins" element={<Admin />}>
-          <Route index element={<DashBoar />} />
-          <Route path="manage-users" element={<ManageUsers />} />
-        </Route>
-      </Routes>
+      <Layout />
     </BrowserRouter>
     {/* </React.StrictMode> */}
   </Provider>

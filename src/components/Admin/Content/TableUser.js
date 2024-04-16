@@ -24,7 +24,12 @@ const TableUser = (props) => {
                   <td>{item.username}</td>
                   <td>{item.role}</td>
                   <td>
-                    <button className="btn btn-secondary">view</button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => props.handleClickBtnView(item)}
+                    >
+                      view
+                    </button>
                     <button
                       className="btn btn-warning mx-3"
                       onClick={() => props.handleClickBtnUpdate(item)}

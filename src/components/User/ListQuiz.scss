@@ -1,0 +1,8 @@
+.list-quiz-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  .card {
+    min-height: 500px;
+  }
+}

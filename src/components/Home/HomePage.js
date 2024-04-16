@@ -1,5 +1,13 @@
+import { Button } from "react-bootstrap";
 import videoHomePage from "../../assets/video-homepage.mp4";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const HomePage = (props) => {
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const account = useSelector((state) => state.user.account);
+  console.log("account >>", account);
+  console.log("isAuthenticated >>", isAuthenticated);
   return (
     <div className="homepage-container">
       <video autoPlay muted loop>
@@ -16,7 +24,19 @@ const HomePage = (props) => {
           designed to be refreshingly different.
         </div>
         <div className="title-3">
-          <button className="btn btn-dark">Get started—it's free</button>
+          {isAuthenticated === false ? (
+            <button className="btn btn-dark" onClick={() => navigate("/login")}>
+              Get started—it's free
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-dark"
+              onClick={() => navigate("/user")}
+            >
+              Doing Quiz Now
+            </button>
+          )}
         </div>
       </div>
     </div>

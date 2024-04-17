@@ -32,7 +32,7 @@ const HomePage = (props) => {
             <button
               type="button"
               className="btn btn-dark"
-              onClick={() => navigate("/user")}
+              onClick={() => navigate("/users")}
             >
               Doing Quiz Now
             </button>

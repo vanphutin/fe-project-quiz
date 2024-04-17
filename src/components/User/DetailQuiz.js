@@ -1,11 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { getDataQuiz } from "../../services/apiService";
 import "./DetailQuiz.scss";
 import _ from "lodash";
+import Question from "./Quesiton";
+import hardSet from "redux-persist/es/stateReconciler/hardSet";
 const DetailQuiz = (props) => {
   const params = useParams();
   const location = useLocation();
+  const [dataQuiz, setDataQuiz] = useState([]);
+  const [index, setIndex] = useState(0);
+
   console.log(location);
   const quizId = params.id;
   useEffect(() => {
@@ -34,7 +39,19 @@ const DetailQuiz = (props) => {
           return { questionId: key, answers, questionDescription, image };
         })
         .value();
-      console.log(data);
+      // console.log(data);
+      setDataQuiz(data);
+    }
+  };
+  console.log("check data quiz >>", dataQuiz);
+
+  const handlePrev = () => {
+    if (index - 1 < 0) return;
+    setIndex(index - 1);
+  };
+  const handleNext = () => {
+    if (dataQuiz && dataQuiz.length > index + 1) {
+      setIndex(index + 1);
     }
   };
   return (
@@ -43,20 +60,18 @@ const DetailQuiz = (props) => {
         <div className="title">
           Quiz {quizId} : {location?.state?.quizTile}
         </div>
-        <div className="q-body">
+        {/* <div className="q-body">
           <img src="" alt="" />
-        </div>
+        </div> */}
         <div className="q-content">
-          <div className="question">Question 1 : What time ? </div>
-          <div className="answer">
-            <div className="a-child">A. fsf</div>
-            <div className="a-child">B. fsf</div>
-            <div className="a-child">C. fsf</div>
-          </div>
+          <Question
+            index={index}
+            data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+          />
         </div>
         <div className="footer">
-          <button>Back</button>
-          <button>Next</button>
+          <button onClick={() => handlePrev()}>Prev</button>
+          <button onClick={() => handleNext()}>Next</button>
         </div>
       </div>
 

@@ -1,9 +1,12 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { getDataQuiz } from "../../services/apiService";
+import "./DetailQuiz.scss";
 import _ from "lodash";
 const DetailQuiz = (props) => {
   const params = useParams();
+  const location = useLocation();
+  console.log(location);
   const quizId = params.id;
   useEffect(() => {
     fetchQuestions();
@@ -34,6 +37,31 @@ const DetailQuiz = (props) => {
       console.log(data);
     }
   };
-  return <div className="detail-quiz-container">Detail Quiz</div>;
+  return (
+    <div className="container detail-quiz-container">
+      <div className="left-content">
+        <div className="title">
+          Quiz {quizId} : {location?.state?.quizTile}
+        </div>
+        <div className="q-body">
+          <img src="" alt="" />
+        </div>
+        <div className="q-content">
+          <div className="question">Question 1 : What time ? </div>
+          <div className="answer">
+            <div className="a-child">A. fsf</div>
+            <div className="a-child">B. fsf</div>
+            <div className="a-child">C. fsf</div>
+          </div>
+        </div>
+        <div className="footer">
+          <button>Back</button>
+          <button>Next</button>
+        </div>
+      </div>
+
+      <div className="right-content">Count down</div>
+    </div>
+  );
 };
 export default DetailQuiz;

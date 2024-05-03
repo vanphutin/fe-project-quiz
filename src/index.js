@@ -6,6 +6,7 @@ import store from "./redux/store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
+import "react-perfect-scrollbar/dist/css/styles.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

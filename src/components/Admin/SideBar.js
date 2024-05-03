@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import {
   ProSidebar,
@@ -22,6 +22,7 @@ import { FaReact } from "react-icons/fa";
 import sidebarBg from "../../assets/bg2.jpg";
 
 const SideBar = (props) => {
+  const navigate = useNavigate();
   const { image, collapsed, toggled, handleToggleSidebar } = props;
   return (
     <>
@@ -46,7 +47,14 @@ const SideBar = (props) => {
             }}
           >
             <FaReact size={"3em"} color="green" />
-            <span>Van Phu Tin</span>
+            <span
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              Van Phu Tin
+            </span>
           </div>
         </SidebarHeader>
 
@@ -71,8 +79,16 @@ const SideBar = (props) => {
                 Quản lí User
                 <Link to="/admins/manage-users"></Link>
               </MenuItem>
-              <MenuItem> Quản lí Bài Quiz</MenuItem>
-              <MenuItem> Quản lí Câu Hỏi </MenuItem>
+              <MenuItem>
+                {" "}
+                Quản lí Bài Quiz
+                <Link to="/admins/manage-quizzes"></Link>
+              </MenuItem>
+              <MenuItem>
+                {" "}
+                Quản lí Câu Hỏi
+                <Link to="/admins/manage-questions"></Link>
+              </MenuItem>
             </SubMenu>
           </Menu>
         </SidebarContent>

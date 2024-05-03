@@ -4,15 +4,25 @@ const Question = (props) => {
   if (_.isEmpty(data)) {
     return <></>;
   }
+  const handleHanLeCheckBox = (event, aId, qId) => {
+    props.handleCheckBox(aId, qId);
+  };
   return (
     <>
       <div className="q-body">
-        {data.image && (
-          <img
-            src={`data:image/png;base64, ${data.image}`}
-            className="card-img-top"
-            alt="..."
-          />
+        {data.image ? (
+          <div className="q-image">
+            <img
+              src={`data:image/png;base64, ${data.image}`}
+              className="card-img-top"
+              alt="..."
+            />
+          </div>
+        ) : (
+          <div className="q-image">
+            {" "}
+            <p className="q-text">This question has no images .</p>{" "}
+          </div>
         )}
       </div>
       <div className="question">
@@ -28,7 +38,10 @@ const Question = (props) => {
                   <input
                     className="form-check-input"
                     type="checkbox"
-                    value=""
+                    checked={a.isSelected}
+                    onChange={(event) => {
+                      handleHanLeCheckBox(event, a.id, data.questionId);
+                    }}
                   />
                   <label className="form-check-label">{a.description}</label>
                 </div>

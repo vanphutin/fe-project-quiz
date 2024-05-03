@@ -1,33 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { ImFolderUpload } from "react-icons/im";
 import { toast } from "react-toastify";
-import { postCreateUser } from "../../../services/apiService";
+import { putUpdateQuiz } from "../../../../services/apiService";
+import _ from "lodash";
 
-const ModalCreateUser = (props) => {
-  const { show, setShow } = props;
+const ModalUpdateQuiz = (props) => {
+  const { show, setShow, dataUpdate } = props;
+  const [isModalVisible, setIsModalVisible] = useState(true); // Thêm state để kiểm soát sự tồn tại của modal
 
   const handleClose = () => {
     setShow(false);
-    setEmail("");
-    setPasword("");
-    setUsername("");
-    setRole("USER");
+    setName("");
     setImage("");
+    setDescription("");
     setPreviewImg("");
+    setIsModalVisible(false);
+    props.resetUpdateData();
   };
 
-  // const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+    setIsModalVisible(true); // Đặt isModalVisible về true khi bạn muốn hiển thị modal
+  };
 
-  const [email, setEmail] = useState("");
-  const [password, setPasword] = useState("");
-  const [username, setUsername] = useState("");
-  const [role, setRole] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
   const [image, setImage] = useState("");
   const [previewImg, setPreviewImg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false); // State để theo dõi xem hành động bất đồng bộ đang được thực thi hay không
 
+  useEffect(() => {
+    console.log("checked", dataUpdate);
+    if (!_.isEmpty(dataUpdate)) {
+      setName(dataUpdate.name);
+      description(dataUpdate.description);
+
+      setImage("");
+      if (dataUpdate.image) {
+        setPreviewImg(`data:image/jpeg;base64, ${dataUpdate.image} `);
+      }
+    }
+  }, [dataUpdate]);
   const handleUploadImg = (event) => {
     if (event.target && event.target.files && event.target.files[0]) {
       setPreviewImg(URL.createObjectURL(event.target.files[0]));
@@ -37,41 +53,23 @@ const ModalCreateUser = (props) => {
     }
     console.log("hello");
   };
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
 
   const handleSubmitCreateUser = async () => {
-    const isValidateEmail = validateEmail(email);
     setIsSubmitting(true); // Đặt isSubmitting thành true khi bắt đầu hành động bất đồng bộ
 
-    if (!isValidateEmail) {
-      toast.error("Invalid email");
-      setIsSubmitting(false); // Đặt lại isSubmitting thành false khi hành động kết thúc
-      return;
-    }
-    if (!password || password === "") {
-      toast.error("Invalid password");
-      setIsSubmitting(false); // Đặt lại isSubmitting thành false khi hành động kết thúc
-      return;
-    }
-    let data = await postCreateUser(email, password, username, role, image);
-    console.log("check res >>", data);
+    let data = await putUpdateQuiz(dataUpdate.id, name, description, image);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
       // await props.fetchListUser();
-      props.setCurrentPage(1);
-      await props.fetchListUserWithPaginate(1);
+      // props.setCurrentPage(1);
+      await props.fetchListUserWithPaginate(props.setCurrentPage);
     }
     if (data && data.EC !== 0) {
       toast.error(data.EM);
     }
     setIsSubmitting(false); // Đặt lại isSubmitting thành false sau khi hành động kết thúc
+    console.log("check res >>", data);
   };
   return (
     <>
@@ -80,64 +78,40 @@ const ModalCreateUser = (props) => {
       </Button> */}
 
       <Modal
-        show={show}
+        show={show && isModalVisible}
         onHide={handleClose}
         size="xl"
         backdrop="static"
-        className={`modal modal-add-user ${show ? "show" : "hide"}`}
+        className="modal-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add new user</Modal.Title>
+          <Modal.Title>Update user</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
             <div className="col-md-6">
-              <label className="form-label">Email</label>
+              <label className="form-label">name</label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
-                value={email}
+                value={name}
                 onChange={(event) => {
-                  setEmail(event.target.value);
+                  setName(event.target.value);
                 }}
               />
             </div>
             <div className="col-md-6">
-              <label className="form-label">Password</label>
+              <label className="form-label">Description</label>
               <input
-                type="password"
+                type="text"
                 className="form-control"
-                value={password}
+                value={description}
                 onChange={(event) => {
-                  setPasword(event.target.value);
+                  setDescription(event.target.value);
                 }}
               />
             </div>
 
-            <div className="col-md-6">
-              <label className="form-label">User name</label>
-              <input
-                type="text"
-                className="form-control"
-                value={username}
-                onChange={(event) => {
-                  setUsername(event.target.value);
-                }}
-              />
-            </div>
-            <div className="col-md-4">
-              <label className="form-label">Role</label>
-              <select
-                className="form-select"
-                onChange={(event) => {
-                  setRole(event.target.value);
-                }}
-                value={role}
-              >
-                <option value="USER">User</option>
-                <option value="ADMIN">Admin</option>
-              </select>
-            </div>
             <div className="col-md-12">
               <label className="form-labe lable-upload" htmlFor="labelUpload">
                 <ImFolderUpload />
@@ -162,9 +136,15 @@ const ModalCreateUser = (props) => {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              handleClose();
+            }}
+          >
             Close
-          </Button>
+          </button>
+
           <Button
             variant="primary"
             onClick={handleSubmitCreateUser}
@@ -177,4 +157,4 @@ const ModalCreateUser = (props) => {
     </>
   );
 };
-export default ModalCreateUser;
+export default ModalUpdateQuiz;

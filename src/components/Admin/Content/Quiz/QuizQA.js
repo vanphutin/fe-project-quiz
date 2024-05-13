@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import "./Questions.scss";
+import "./QuizQA.scss";
 import {
   getAllQuizForAdmin,
   postCreateNewQuestionForQuestion,
   postCreateNewQuestionForQuiz,
+  getQuizWithQA,
 } from "../../../../services/apiService";
 import { BsFillPatchPlusFill } from "react-icons/bs";
 import { BsPatchMinusFill } from "react-icons/bs";
@@ -16,13 +17,12 @@ import _, { now } from "lodash";
 import Lightbox from "react-awesome-lightbox";
 import { toast } from "react-toastify";
 
-const Questions = (props) => {
+const QuizQA = (props) => {
   // const options = [
   //   { value: "chocolate", label: "Chocolate" },
   //   { value: "strawberry", label: "Strawberry" },
   //   { value: "vanilla", label: "Vanilla" },
   // ];
-  const [selectedQuiz, setSelectedQuiz] = useState({});
   const initQuestion = [
     {
       id: uuidv4(),
@@ -45,10 +45,12 @@ const Questions = (props) => {
     title: "",
     url: "",
   });
+  const [selectedQuiz, setSelectedQuiz] = useState({});
   const [listQuiz, setListQuiz] = useState([]);
   useEffect(() => {
     fetchQuiz();
   }, []);
+
   const fetchQuiz = async () => {
     let res = await getAllQuizForAdmin();
     if (res && res.EC === 0) {
@@ -61,6 +63,42 @@ const Questions = (props) => {
       setListQuiz(newListQuiz);
     }
   };
+
+  useEffect(() => {
+    if (selectedQuiz && selectedQuiz.value) {
+      fetchQuizWithQA();
+    }
+  }, [selectedQuiz]);
+
+  const fetchQuizWithQA = async () => {
+    let res = await getQuizWithQA(selectedQuiz.value);
+    console.log("res > ", res);
+    if (res && res.EC === 0) {
+      // convert base64
+      let newQA = [];
+      for (let i = 0; i < res.DT.qa.length; i++) {
+        if (res.DT.qa[i].imageFile) {
+          res.DT.qa[i].imageName = `question - ${res.DT.qa[i].id}.png`;
+          res.DT.qa[i].imageFile = await urlToFile(
+            `data:text/png;base64,${res.DT.qa[i].imageFile}`,
+            `question - ${res.DT.qa[i].id}.png`,
+            `image/png`
+          );
+        }
+        newQA.push(res.DT.qa[i]);
+      }
+      setQuestions(newQA);
+    }
+  };
+  function urlToFile(url, filename, mimeType) {
+    return fetch(url)
+      .then(function (res) {
+        return res.arrayBuffer();
+      })
+      .then(function (buf) {
+        return new File([buf], filename, { type: mimeType });
+      });
+  }
   const handleAddRemoveQuestion = (type, id) => {
     if (type === "ADD") {
       const newQuestion = {
@@ -237,8 +275,6 @@ const Questions = (props) => {
   };
   return (
     <div className="questions-container">
-      <div className="title">Manage Questions</div>
-      <hr />
       <div className="add-new-question">
         <div className="col-6 form-group">
           <label className="mb-2">Select Quiz:</label>
@@ -397,4 +433,4 @@ const Questions = (props) => {
   );
 };
 
-export default Questions;
+export default QuizQA;

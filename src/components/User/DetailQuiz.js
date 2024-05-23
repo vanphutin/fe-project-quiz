@@ -7,6 +7,7 @@ import Question from "./Quesiton";
 import hardSet from "redux-persist/es/stateReconciler/hardSet";
 import { logDOM } from "@testing-library/react";
 import ModalResult from "./ModalResult";
+import RightContent from "./Content/RightContent";
 const DetailQuiz = (props) => {
   const params = useParams();
   const location = useLocation();
@@ -14,7 +15,6 @@ const DetailQuiz = (props) => {
   const [index, setIndex] = useState(0);
   const [isShowModalResult, setIsShowModalResult] = useState(false);
   const [dataModalResult, setDataModalResult] = useState({});
-
   // console.log(location);
   const quizId = params.id;
   useEffect(() => {
@@ -23,6 +23,7 @@ const DetailQuiz = (props) => {
   const fetchQuestions = async () => {
     const res = await getDataQuiz(quizId);
     console.log("check res >>", res);
+
     if (res && res.EC === 0) {
       let raw = res.DT;
       let data = _.chain(raw)
@@ -141,7 +142,13 @@ const DetailQuiz = (props) => {
         </div>
       </div>
 
-      <div className="right-content">Count down</div>
+      <div className="right-content">
+        <RightContent
+          dataQuiz={dataQuiz}
+          handleFinish={handleFinish}
+          setIndex={setIndex}
+        />
+      </div>
       <ModalResult
         show={isShowModalResult}
         setShow={setIsShowModalResult}

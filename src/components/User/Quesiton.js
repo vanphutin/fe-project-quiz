@@ -1,6 +1,10 @@
 import _ from "lodash";
+import { useState } from "react";
+import Lightbox from "react-awesome-lightbox";
+
 const Question = (props) => {
   const { data, index } = props;
+  const [isPerviewImage, setIsPerviewImage] = useState(false);
   if (_.isEmpty(data)) {
     return <></>;
   }
@@ -16,7 +20,16 @@ const Question = (props) => {
               src={`data:image/png;base64, ${data.image}`}
               className="card-img-top"
               alt="..."
+              onClick={() => setIsPerviewImage(true)}
+              style={{ cursor: "pointer" }}
             />
+            {isPerviewImage === true && (
+              <Lightbox
+                image={`data:image/png;base64, ${data.image}`}
+                title={"Question Image"}
+                onClose={() => setIsPerviewImage(false)}
+              ></Lightbox>
+            )}
           </div>
         ) : (
           <div className="q-image">

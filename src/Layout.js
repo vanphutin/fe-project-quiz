@@ -4,7 +4,7 @@ import User from "./components/User/User";
 import Admin from "./components/Admin/Admin";
 import HomePage from "./components/Home/HomePage";
 import ManageUsers from "./components/Admin/Content/ManageUsers";
-import DashBoar from "./components/Admin/Content/DashBoar";
+import DashBoard from "./components/Admin/Content/DashBoard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Auth/Login";
@@ -50,7 +50,7 @@ const Layout = (props) => {
             </PrivateRoutes>
           }
         >
-          <Route index element={<DashBoar />} />
+          <Route index element={<DashBoard />} />
           <Route path="manage-users" element={<ManageUsers />} />
           <Route path="manage-quizzes" element={<ManagerQuiz />} />
           <Route path="manage-questions" element={<Questions />} />

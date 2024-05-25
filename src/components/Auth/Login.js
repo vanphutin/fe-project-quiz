@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
 import { CgSpinnerTwo } from "react-icons/cg";
+import Language from "../Header/Language";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -61,6 +62,7 @@ const Login = () => {
         >
           Sign up
         </button>
+        <Language />
       </div>
       <div className="title col-4 mx-auto">
         <svg viewBox="0 0 960 300">

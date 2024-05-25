@@ -108,7 +108,9 @@ const logout = (email, refresh_token) => {
     refresh_token,
   });
 };
-
+const getDashBoard = () => {
+  return axios.get("api/v1/overview");
+};
 export { postCreateUser };
 export { getAllUsers };
 export { putUpdateUser };
@@ -129,3 +131,4 @@ export { postAssignQuiz };
 export { getQuizWithQA };
 export { postUpsetQA };
 export { logout };
+export { getDashBoard };

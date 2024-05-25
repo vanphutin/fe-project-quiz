@@ -13,7 +13,6 @@ const INITIAL_STATE = {
   },
   isAuthenticated: false,
 };
-console.log("INITIAL_STATE", INITIAL_STATE);
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {

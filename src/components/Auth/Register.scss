@@ -3,6 +3,10 @@
     height: 45px;
     text-align: right;
     padding: 5px 100px 0 100px;
+    display: flex;
+    gap: 10px;
+    justify-content: right;
+    align-items: center;
 
     button {
       padding: 3px 15px;

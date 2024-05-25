@@ -64,7 +64,7 @@ const SideBar = (props) => {
               icon={<FaTachometerAlt />}
               suffix={<span className="badge red">New</span>}
             >
-              dashboard
+              DashBoard
               <Link to="/admins"></Link>
             </MenuItem>
             <MenuItem icon={<FaGem />}> components </MenuItem>

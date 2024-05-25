@@ -2,7 +2,11 @@ import { Button } from "react-bootstrap";
 import videoHomePage from "../../assets/video-homepage.mp4";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useTranslation, Trans } from "react-i18next";
+
 const HomePage = (props) => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const account = useSelector((state) => state.user.account);
@@ -22,6 +26,7 @@ const HomePage = (props) => {
         <div className="title-2">
           Get more data—like signups, feedback, and anything else—with forms
           designed to be refreshingly different.
+          {t("description.part2")}
         </div>
         <div className="title-3">
           {isAuthenticated === false ? (

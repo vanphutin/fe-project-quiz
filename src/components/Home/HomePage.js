@@ -24,9 +24,15 @@ const HomePage = (props) => {
           page
         </div>
         <div className="title-2">
-          Get more data—like signups, feedback, and anything else—with forms
-          designed to be refreshingly different.
-          {t("description.part2")}
+          Welcome to Văn Phú Tín! We provide top-quality study materials,
+          diverse exercises, and expert-led courses to help you achieve your
+          learning goals. Click{" "}
+          {isAuthenticated === false ? (
+            <i style={{ fontWeight: "500" }}>"Get started—it's free"</i>
+          ) : (
+            <i style={{ fontWeight: "500" }}>"Doing Quiz Now"</i>
+          )}{" "}
+          to explore our exceptional offerings today!
         </div>
         <div className="title-3">
           {isAuthenticated === false ? (

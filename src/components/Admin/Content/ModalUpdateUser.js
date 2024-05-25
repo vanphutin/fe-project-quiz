@@ -36,7 +36,7 @@ const ModalUpdateUser = (props) => {
   const [isSubmitting, setIsSubmitting] = useState(false); // State để theo dõi xem hành động bất đồng bộ đang được thực thi hay không
 
   useEffect(() => {
-    console.log("checked", dataUpdate);
+    // console.log("checked", dataUpdate);
     if (!_.isEmpty(dataUpdate)) {
       setEmail(dataUpdate.email);
       setUsername(dataUpdate.username);

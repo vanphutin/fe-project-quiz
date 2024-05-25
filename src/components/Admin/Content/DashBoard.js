@@ -24,7 +24,7 @@ const DashBoard = (props) => {
     if (res && res.EC === 0) {
       setDataOverView(res.DT);
     }
-    console.log("res>>", res, "dataOverView", dataOverView);
+    // console.log("res>>", res, "dataOverView", dataOverView);
   };
   const data = [
     {

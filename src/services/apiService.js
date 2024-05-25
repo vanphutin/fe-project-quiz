@@ -111,6 +111,10 @@ const logout = (email, refresh_token) => {
 const getDashBoard = () => {
   return axios.get("api/v1/overview");
 };
+
+const postProfile = (username, userImage) => {
+  return axios.post("api/v1/profile");
+};
 export { postCreateUser };
 export { getAllUsers };
 export { putUpdateUser };
@@ -132,3 +136,4 @@ export { getQuizWithQA };
 export { postUpsetQA };
 export { logout };
 export { getDashBoard };
+export { postProfile };

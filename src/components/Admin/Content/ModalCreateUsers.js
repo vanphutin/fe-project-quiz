@@ -35,7 +35,7 @@ const ModalCreateUser = (props) => {
     } else {
       // setPreviewImg("NULL");
     }
-    console.log("hello");
+    // console.log("hello");
   };
   const validateEmail = (email) => {
     return String(email)
@@ -60,7 +60,7 @@ const ModalCreateUser = (props) => {
       return;
     }
     let data = await postCreateUser(email, password, username, role, image);
-    console.log("check res >>", data);
+    // console.log("check res >>", data);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       handleClose();
